@@ -34,7 +34,7 @@ public class JigsawActivity extends Activity {
         if(winner == null) {
             return;
         }
-        broadcastMessage(String.format(messages.getMessage("jigsawWinner"), winner.getName()));
+        broadcastMessage(String.format(messages.getMessage("jigsawWinner"), winner.getName(), correctAnswer));
         invokeRandomReward(winner);
     }
 

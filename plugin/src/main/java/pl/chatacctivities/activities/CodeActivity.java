@@ -36,7 +36,7 @@ public class CodeActivity extends Activity {
         if(winner == null) {
             return;
         }
-        broadcastMessage(String.format(messages.getMessage("codeWinner"), winner.getName()));
+        broadcastMessage(String.format(messages.getMessage("codeWinner"), winner.getName(), correctAnswer));
         invokeRandomReward(winner);
     }
 

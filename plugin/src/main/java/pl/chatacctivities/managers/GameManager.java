@@ -73,7 +73,7 @@ public class GameManager {
             int randomIndex = new Random().nextInt(configData.getActivities().size());
             String randomActivity = configData.getActivities().get(randomIndex);
             plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), "ca start " + randomActivity);
-        }, 0, 20L * 30 * configData.getEventInterval());
+        }, 20L * 60 * configData.getEventInterval(), 20L * 60 * configData.getEventInterval());
     }
 
     public void stopEventInterval() {
