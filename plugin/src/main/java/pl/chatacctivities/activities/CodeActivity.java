@@ -25,7 +25,7 @@ public class CodeActivity extends Activity {
 
     @Override
     public boolean onCommand(Player player, String argument) {
-        if(!argument.equalsIgnoreCase(correctAnswer)) {
+        if(!argument.equalsIgnoreCase(correctAnswer) || winner != null) {
             return false;
         }
         this.winner = player;

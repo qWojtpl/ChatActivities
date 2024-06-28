@@ -8,6 +8,8 @@ commands:
   chatactivities:
     usage: /<command>
     description: Manage ChatActivities plugin
+    aliases:
+      - ca
   code:
     usage: /<command>
     description: Type in code

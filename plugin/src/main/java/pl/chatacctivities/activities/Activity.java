@@ -15,7 +15,7 @@ public abstract class Activity {
     protected final DictionaryData dictionaryData = plugin.getDictionaryData();
     protected final Messages messages = plugin.getMessages();
 
-    private final String colors = "0123456789aecbdf";
+    private final String colors = "0123456789abcdef";
 
     public abstract void onStart();
     public abstract boolean onCommand(Player player, String argument);

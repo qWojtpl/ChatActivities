@@ -19,8 +19,16 @@ public abstract class BaseHandler<T extends Activity> implements CommandExecutor
             sender.sendMessage(getMessage("mustBePlayer"));
             return true;
         }
+        if(currentActivity == null) {
+            sender.sendMessage(getMessage("noActivity"));
+            return true;
+        }
+        if(args.length == 0) {
+            sendCorrectUsage(sender, label);
+            return true;
+        }
         if(args[0].isEmpty()) {
-            sender.sendMessage(getMessage("correctUsage") + "/" + label + "<" + getMessage("answer") + ">");
+            sendCorrectUsage(sender, label);
             return true;
         }
         boolean completed = currentActivity.onCommand((Player) sender, args[0]);
@@ -36,6 +44,10 @@ public abstract class BaseHandler<T extends Activity> implements CommandExecutor
 
     public void setCurrentActivity(T activity) {
         this.currentActivity = activity;
+    }
+
+    private void sendCorrectUsage(CommandSender sender, String label) {
+        sender.sendMessage(getMessage("correctUsage") + "/" + label + "<" + getMessage("answer") + ">");
     }
 
     private String getMessage(String key) {
