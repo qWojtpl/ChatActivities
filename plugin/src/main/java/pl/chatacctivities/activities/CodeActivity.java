@@ -39,15 +39,15 @@ public class CodeActivity extends Activity {
             return;
         }
         broadcastMessage(String.format(messages.getMessage("codeWinner"), winner.getName()));
+        invokeRandomReward(winner);
     }
 
     private String getRandomChars() {
-        Random random = new Random();
-        int rdm = random.nextInt(4) + 2;
+        int rdm = getRandomNumber(4) + 2;
         StringBuilder randomCharsBuilder = new StringBuilder();
         for(int i = 0; i < rdm; i++) {
             randomCharsBuilder.append(getRandomColor());
-            randomCharsBuilder.append(CHARS[random.nextInt(CHARS.length)]);
+            randomCharsBuilder.append(CHARS[getRandomNumber(CHARS.length)]);
         }
         return randomCharsBuilder.toString();
     }

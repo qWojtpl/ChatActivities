@@ -23,16 +23,19 @@ public abstract class Activity {
 
     protected String getRandomWord() {
         List<String> words = new ArrayList<>(dictionaryData.getWords());
-        Random random = new Random();
-        int randomIndex = random.nextInt(words.size());
-        return words.get(randomIndex);
+        return words.get(getRandomNumber(words.size()));
     }
 
     protected String getRandomColor() {
-        Random random = new Random();
         String[] colors = COLORS.split("");
-        int randomIndex = random.nextInt(colors.length);
-        return "§" + colors[randomIndex];
+        return "§" + colors[getRandomNumber(colors.length)];
+    }
+
+    protected String invokeRandomReward(Player player) {
+        List<String> rewards = plugin.getGameManager().getRewards();
+        String reward = rewards.get(getRandomNumber(rewards.size()));
+        plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), String.format(reward, player.getName()));
+        return reward;
     }
 
     protected void broadcastMessage(String message) {
@@ -44,6 +47,11 @@ public abstract class Activity {
 
     protected void stopActivity() {
         plugin.getGameManager().stopActivity(this);
+    }
+
+    protected int getRandomNumber(int max) {
+        Random random = new Random();
+        return random.nextInt(max);
     }
 
 }

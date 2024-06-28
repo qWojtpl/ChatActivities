@@ -36,10 +36,16 @@ public class ActivityStarter implements CommandExecutor {
                 if(args.length > 1) {
                     switch(args[1].toLowerCase()) {
                         case "code":
-                            codeHandler.setCurrentActivity((CodeActivity) gameManager.startActivity(CodeActivity.class));
+                            CodeActivity codeActivity = (CodeActivity) gameManager.startActivity(CodeActivity.class);
+                            if(codeActivity != null) {
+                                codeHandler.setCurrentActivity(codeActivity);
+                            }
                             break;
                         case "jigsaw":
-                            jigsawHandler.setCurrentActivity((JigsawActivity) gameManager.startActivity(JigsawActivity.class));
+                            JigsawActivity jigsawActivity = (JigsawActivity) gameManager.startActivity(JigsawActivity.class);
+                            if(jigsawActivity != null) {
+                                jigsawHandler.setCurrentActivity(jigsawActivity);
+                            }
                             break;
                         default:
                             sender.sendMessage(messages.getMessage("notFound"));

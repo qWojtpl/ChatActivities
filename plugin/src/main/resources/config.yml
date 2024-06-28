@@ -1,2 +1,9 @@
 config:
   adminPermission: chatactivities.manage
+  eventInterval: 10
+  activities:
+    - jigsaw
+    - code
+  rewards:
+    - minecraft:give %s minecraft:diamond 1
+    - minecraft:give %s minecraft:emerald 2

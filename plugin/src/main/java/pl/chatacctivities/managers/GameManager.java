@@ -11,6 +11,7 @@ public class GameManager {
 
     private final ChatActivities plugin = ChatActivities.getInstance();
     private final List<Activity> currentActivities = new ArrayList<>();
+    private final List<String> rewards = new ArrayList<>();
 
     public void startActivity(Activity activity) {
         if(hasActivity(activity.getClass())) {
@@ -44,6 +45,18 @@ public class GameManager {
         for(Activity activity : currentActivities) {
             stopActivity(activity);
         }
+    }
+
+    public void addReward(String reward) {
+        rewards.add(reward);
+    }
+
+    public void removeReward(String reward) {
+        rewards.remove(reward);
+    }
+
+    public List<String> getRewards() {
+        return new ArrayList<>(rewards);
     }
 
     private boolean hasActivity(Class<? extends Activity> activity) {
