@@ -7,11 +7,12 @@ import java.util.Set;
 
 public class DictionaryData extends BaseDataHandler {
 
+    private final String FILE_NAME = "dictionary.txt";
     private final Set<String> words = new HashSet<>();
 
     @Override
     public void loadData() throws IOException {
-        for(String word : Files.readAllLines(getFile("dictionary.txt").toPath())) {
+        for(String word : Files.readAllLines(getFile(FILE_NAME).toPath())) {
             addWord(word);
         }
     }

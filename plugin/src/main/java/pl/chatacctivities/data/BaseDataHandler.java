@@ -1,5 +1,6 @@
 package pl.chatacctivities.data;
 
+import org.bukkit.configuration.file.YamlConfiguration;
 import pl.chatacctivities.ChatActivities;
 
 import java.io.File;
@@ -11,7 +12,11 @@ public abstract class BaseDataHandler {
 
     public abstract void loadData() throws IOException;
 
-    protected File getFile(String fileName) {
+    protected final YamlConfiguration getYaml(String fileName) {
+        return YamlConfiguration.loadConfiguration(getFile(fileName));
+    }
+
+    protected final File getFile(String fileName) {
         File file = new File(plugin.getDataFolder() + "/" + fileName);
         if(!file.exists()) {
             plugin.saveResource(fileName, false);
