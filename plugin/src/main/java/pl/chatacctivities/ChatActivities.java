@@ -35,12 +35,14 @@ public final class ChatActivities extends JavaPlugin {
         instance = this;
         initializeInstances();
         initializeCommands();
+        gameManager.startEventInterval();
         getLogger().info("Activities enabled.");
     }
 
     @Override
     public void onDisable() {
-        gameManager.stopAllActivities();
+        gameManager.stopCurrentActivity();
+        gameManager.stopEventInterval();
         getLogger().info("Activities disabled.");
     }
 

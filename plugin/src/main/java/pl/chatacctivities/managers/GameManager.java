@@ -2,23 +2,30 @@ package pl.chatacctivities.managers;
 
 import pl.chatacctivities.ChatActivities;
 import pl.chatacctivities.activities.Activity;
+import pl.chatacctivities.data.ConfigData;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class GameManager {
 
     private final ChatActivities plugin = ChatActivities.getInstance();
-    private final List<Activity> currentActivities = new ArrayList<>();
     private final List<String> rewards = new ArrayList<>();
+    private Activity currentActivity;
+    private int task;
+
+    public Activity getCurrentActivity() {
+        return this.currentActivity;
+    }
 
     public void startActivity(Activity activity) {
-        if(hasActivity(activity.getClass())) {
+        if(currentActivity != null) {
             throw new RuntimeException("Activity " + activity.getClass().getSimpleName() + " is already running!");
         }
         sendConsoleMessage("Started activity: " + activity.getClass().getSimpleName());
-        currentActivities.add(activity);
+        currentActivity = activity;
         activity.onStart();
     }
 
@@ -36,15 +43,15 @@ public class GameManager {
 
     public void stopActivity(Activity activity) {
         sendConsoleMessage("Stopped activity: " + activity.getClass().getSimpleName());
-        currentActivities.remove(activity);
+        currentActivity = null;
         activity.onStop();
     }
 
-    public void stopAllActivities() {
-        List<Activity> currentActivities = new ArrayList<>(this.currentActivities);
-        for(Activity activity : currentActivities) {
-            stopActivity(activity);
+    public void stopCurrentActivity() {
+        if(getCurrentActivity() == null) {
+            return;
         }
+        stopActivity(getCurrentActivity());
     }
 
     public void addReward(String reward) {
@@ -59,13 +66,18 @@ public class GameManager {
         return new ArrayList<>(rewards);
     }
 
-    private boolean hasActivity(Class<? extends Activity> activity) {
-        for(Activity a : this.currentActivities) {
-            if(a.getClass().equals(activity)) {
-                return true;
-            }
-        }
-        return false;
+    public void startEventInterval() {
+        ConfigData configData = plugin.getConfigData();
+        task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
+            stopCurrentActivity();
+            int randomIndex = new Random().nextInt(configData.getActivities().size());
+            String randomActivity = configData.getActivities().get(randomIndex);
+            plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), "ca start " + randomActivity);
+        }, 0, 20L * 30 * configData.getEventInterval());
+    }
+
+    public void stopEventInterval() {
+        plugin.getServer().getScheduler().cancelTask(task);
     }
 
     private void sendConsoleMessage(String message) {

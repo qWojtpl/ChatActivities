@@ -7,11 +7,14 @@ import org.bukkit.entity.Player;
 import pl.chatacctivities.ChatActivities;
 import pl.chatacctivities.activities.Activity;
 import pl.chatacctivities.data.Messages;
+import pl.chatacctivities.managers.GameManager;
+
+import java.lang.reflect.ParameterizedType;
 
 public abstract class BaseHandler<T extends Activity> implements CommandExecutor {
 
+    private final GameManager gameManager = ChatActivities.getInstance().getGameManager();
     private final Messages messages = ChatActivities.getInstance().getMessages();
-    private T currentActivity;
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -19,7 +22,11 @@ public abstract class BaseHandler<T extends Activity> implements CommandExecutor
             sender.sendMessage(getMessage("mustBePlayer"));
             return true;
         }
-        if(currentActivity == null) {
+        if(gameManager.getCurrentActivity() == null) {
+            sender.sendMessage(getMessage("noActivity"));
+            return true;
+        }
+        if(!gameManager.getCurrentActivity().getClass().getSimpleName().toLowerCase().contains(command.getName().toLowerCase())) {
             sender.sendMessage(getMessage("noActivity"));
             return true;
         }
@@ -31,21 +38,13 @@ public abstract class BaseHandler<T extends Activity> implements CommandExecutor
             sendCorrectUsage(sender, label);
             return true;
         }
-        boolean completed = currentActivity.onCommand((Player) sender, String.join(" ", args));
+        boolean completed = gameManager.getCurrentActivity().onCommand((Player) sender, String.join(" ", args));
         if(completed) {
-            setCurrentActivity(null);
+            gameManager.stopCurrentActivity();
         } else {
             sender.sendMessage(messages.getMessage("notCorrect"));
         }
         return true;
-    }
-
-    public T getCurrentActivity() {
-        return currentActivity;
-    }
-
-    public void setCurrentActivity(T activity) {
-        this.currentActivity = activity;
     }
 
     private void sendCorrectUsage(CommandSender sender, String label) {

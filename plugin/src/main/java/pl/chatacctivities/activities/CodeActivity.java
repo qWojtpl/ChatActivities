@@ -2,8 +2,6 @@ package pl.chatacctivities.activities;
 
 import org.bukkit.entity.Player;
 
-import java.util.Random;
-
 public class CodeActivity extends Activity {
 
     private final String[] CHARS = new String[]{"!", "@", "#", "$", "%", "^", "&", "*"};
