@@ -1,0 +1,17 @@
+name: ChatActivities
+version: '${project.version}'
+main: pl.chatacctivities.ChatActivities
+api-version: '1.19'
+authors: [Assasin98980]
+description: Add chat activities to your Minecraft server
+commands:
+  code:
+    usage: /<command>
+    description: Type in code
+    aliases:
+      - kod
+  jigsaw:
+    usage: /<command>
+    description: Type in jigsaw
+    aliases:
+      - rozsypanka
