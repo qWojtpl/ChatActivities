@@ -29,12 +29,15 @@ public class CodeActivity extends Activity {
             return false;
         }
         this.winner = player;
-        plugin.getGameManager().stopActivity(this);
+        stopActivity();
         return true;
     }
 
     @Override
     public void onStop() {
+        if(winner == null) {
+            return;
+        }
         broadcastMessage(String.format(messages.getMessage("codeWinner"), winner.getName()));
     }
 

@@ -15,7 +15,7 @@ public abstract class Activity {
     protected final DictionaryData dictionaryData = plugin.getDictionaryData();
     protected final Messages messages = plugin.getMessages();
 
-    private final String colors = "0123456789abcdef";
+    private final String COLORS = "123456789abcdef";
 
     public abstract void onStart();
     public abstract boolean onCommand(Player player, String argument);
@@ -30,7 +30,7 @@ public abstract class Activity {
 
     protected String getRandomColor() {
         Random random = new Random();
-        String[] colors = this.colors.split("");
+        String[] colors = COLORS.split("");
         int randomIndex = random.nextInt(colors.length);
         return "§" + colors[randomIndex];
     }
@@ -40,6 +40,10 @@ public abstract class Activity {
         for(Player p : plugin.getServer().getOnlinePlayers()) {
             p.sendMessage(message);
         }
+    }
+
+    protected void stopActivity() {
+        plugin.getGameManager().stopActivity(this);
     }
 
 }

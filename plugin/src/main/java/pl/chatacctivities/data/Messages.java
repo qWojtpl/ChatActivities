@@ -33,11 +33,11 @@ public class Messages extends BaseDataHandler {
     }
 
     public String getMessage(String key) {
-        return messages.get(key).replace("%" + PREFIX_KEY + "%", getPrefix()).replace("&", "§");
+        return messages.getOrDefault(key, "?").replace("%" + PREFIX_KEY + "%", getPrefix()).replace("&", "§");
     }
 
     public String getPrefix() {
-        return messages.get(PREFIX_KEY);
+        return messages.getOrDefault(PREFIX_KEY, "[PREFIX]");
     }
 
 }

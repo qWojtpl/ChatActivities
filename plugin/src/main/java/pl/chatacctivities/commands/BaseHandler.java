@@ -31,9 +31,11 @@ public abstract class BaseHandler<T extends Activity> implements CommandExecutor
             sendCorrectUsage(sender, label);
             return true;
         }
-        boolean completed = currentActivity.onCommand((Player) sender, args[0]);
+        boolean completed = currentActivity.onCommand((Player) sender, String.join(" ", args));
         if(completed) {
             setCurrentActivity(null);
+        } else {
+            sender.sendMessage(messages.getMessage("notCorrect"));
         }
         return true;
     }
