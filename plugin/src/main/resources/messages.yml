@@ -1,2 +1,6 @@
 messages:
-  prefix: "&5[&fCA&5]"
+  prefix: "&5[&fCA&5] "
+  correctUsage: "%prefix%&cCorrect usage: "
+  answer: "answer"
+  codeAnnouncement: "%prefix%&aCompetition just started! Rewrite word without special characters: &2%s&a. Use &2/code <answer>&a to submit answer."
+  codeWinner: "%prefix%&2%s &ahas won the code competition!"

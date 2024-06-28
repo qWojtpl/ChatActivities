@@ -1,10 +1,13 @@
 name: ChatActivities
 version: '${project.version}'
 main: pl.chatacctivities.ChatActivities
-api-version: '1.19'
+api-version: 1.19
 authors: [Assasin98980]
 description: Add chat activities to your Minecraft server
 commands:
+  chatactivities:
+    usage: /<command>
+    description: Manage ChatActivities plugin
   code:
     usage: /<command>
     description: Type in code

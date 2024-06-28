@@ -9,6 +9,7 @@ import pl.chatacctivities.commands.CodeHandler;
 import pl.chatacctivities.commands.JigsawHandler;
 import pl.chatacctivities.data.BaseDataHandler;
 import pl.chatacctivities.data.DictionaryData;
+import pl.chatacctivities.data.Messages;
 import pl.chatacctivities.managers.GameManager;
 
 import java.io.IOException;
@@ -18,10 +19,11 @@ public final class ChatActivities extends JavaPlugin {
     private static ChatActivities instance;
     private GameManager gameManager;
     private DictionaryData dictionaryData;
+    private Messages messages;
 
     // Activity commands
-    private JigsawHandler<?> jigsawHandler;
-    private CodeHandler<?> codeHandler;
+    private JigsawHandler<JigsawActivity> jigsawHandler;
+    private CodeHandler<CodeActivity> codeHandler;
 
     @Override
     public void onEnable() {
@@ -29,6 +31,7 @@ public final class ChatActivities extends JavaPlugin {
         initializeInstances();
         initializeCommands();
         getLogger().info("Activities enabled.");
+        codeHandler.setCurrentActivity((CodeActivity) gameManager.startActivity(CodeActivity.class));
     }
 
     @Override
@@ -40,11 +43,14 @@ public final class ChatActivities extends JavaPlugin {
     private void initializeInstances() {
         this.gameManager = new GameManager();
         this.dictionaryData = new DictionaryData();
+        this.messages = new Messages();
+
         loadData(dictionaryData);
+        loadData(messages);
 
         // Activity commands
-        this.jigsawHandler = new JigsawHandler<JigsawActivity>();
-        this.codeHandler = new CodeHandler<CodeActivity>();
+        this.jigsawHandler = new JigsawHandler<>();
+        this.codeHandler = new CodeHandler<>();
     }
 
     private void initializeCommands() {
@@ -79,11 +85,15 @@ public final class ChatActivities extends JavaPlugin {
         return this.dictionaryData;
     }
 
-    public JigsawHandler<?> getJigsawHandler() {
+    public Messages getMessages() {
+        return this.messages;
+    }
+
+    public JigsawHandler<JigsawActivity> getJigsawHandler() {
         return this.jigsawHandler;
     }
 
-    public CodeHandler<?> getCodeHandler() {
+    public CodeHandler<CodeActivity> getCodeHandler() {
         return this.codeHandler;
     }
 

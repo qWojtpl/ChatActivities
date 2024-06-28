@@ -1,5 +1,7 @@
 package pl.chatacctivities.activities;
 
+import org.bukkit.entity.Player;
+
 public class JigsawActivity extends Activity {
 
     @Override
@@ -8,8 +10,8 @@ public class JigsawActivity extends Activity {
     }
 
     @Override
-    public void onCommand(String argument) {
-
+    public boolean onCommand(Player player, String argument) {
+        return false;
     }
 
     @Override

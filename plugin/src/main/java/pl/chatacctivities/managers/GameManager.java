@@ -56,7 +56,6 @@ public class GameManager {
     }
 
     private void sendConsoleMessage(String message) {
-        message = message.replace("&", "§");
         plugin.getServer().getConsoleSender().sendMessage(message);
     }
 
